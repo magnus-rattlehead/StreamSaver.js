@@ -3,13 +3,16 @@ StreamSaver.js (legacy-ish) - with ZIP64 support
 
 ... Don't worry it's not deprecated. It's still maintained and i still recommend 
 using this when needed. Just want to let you know that there is this new native way
-to save files to the HD: https://wicg.github.io/native-file-system which is more
+to save files to the HD: https://github.com/whatwg/fs which is more
 or less going to make FileSaver, StreamSaver and similar packages a bit obsolete
 in the future, it'still in a experimental stage and not implemented by all browser.
 That is why I also built [native-file-system-adapter](https://github.com/jimmywarting/native-file-system-adapter)
 so you can have it in all Browsers, Deno, and NodeJS with different storages
 
 [![npm version][npm-image]][npm-url]
+
+**StreamSaver.js is the solution to saving streams in the web browser.
+It is perfect for web apps where there's a need to save large amounts of data on devices with e.g. limited RAM.**
 
 First I want to thank [Eli Grey][1] for a fantastic work implementing the
 [FileSaver.js][2] to save files & blobs so easily!
@@ -20,10 +23,6 @@ storage or in memory you could now actually create a writable stream directly to
 the file system (I'm not talking about chromes sandboxed file system or any other
 web storage). This is accomplish by emulating how a server would instruct the
 browser to save a file using some response header + service worker
-
-StreamSaver.js is the solution to saving streams on the client-side.
-It is perfect for webapps that need to save really large amounts of data created
-on the client-side, where the RAM is really limited, like on mobile devices.
 
 **If the file you are trying to save comes from the cloud/server** use the server instead
 of emulating what the browser does to save files on the disk using StreamSaver.
@@ -129,12 +128,12 @@ There are a few examples in the [examples] directory
 - [slowly write 1 byte / sec](https://jimmywarting.github.io/StreamSaver.js/examples/write-slowly.html)
 
 In the wild
-- [Adding ID3 tag to mp3 file on the fly](https://egoroof.ru/browser-id3-writer/stream) - by [Artyom Egorov](https://github.com/egoroof)
+- [Adding ID3 tag to mp3 file on the fly](https://egoroof.github.io/browser-id3-writer/stream.html) - by [Artyom Egorov](https://github.com/egoroof)
 
 
 How does it work?
 =====================
-There is no magical `saveAs()` function that saves a stream, file or blob. (at least not if/when native-filesystem api becomes avalible)
+There is no magical `saveAs()` function that saves a stream, file or blob. (at least not if/when native-filesystem api becomes available)
 The way we mostly save Blobs/Files today is with the help of [Object URLs](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL) and  [`a[download]`][5] attribute
 [FileSaver.js][2] takes advantage of this and create a convenient `saveAs(blob, filename)`. fantastic! But you can't create a objectUrl from a stream and attach
 it to a link...
